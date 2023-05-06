@@ -15,14 +15,9 @@ except Exception:
 df['Day'] = [d.date() for d in df['Start']]  # day formatted as mm/dd/yyyy
 df['Time'] = [d.time() for d in df['Start']]  # time formatted as hh:mm in GMT +0
 
-# converto GMT +0 to local GMT
-if GMT >= 0:
-    df['Time2'] = df['Time'].apply(lambda x: (dt.datetime.combine(dt.datetime(1, 1, 1), x, ) + dt.timedelta(
-        hours=GMT)).time())
-
-if GMT < 0:
-    df['Time2'] = df['Time'].apply(lambda x: (dt.datetime.combine(dt.datetime(1, 1, 1), x, ) - dt.timedelta(
-        hours=GMT)).time())
+# convert GMT +0 to local GMT
+df['Time2'] = df['Time'].apply(lambda x: (dt.datetime.combine(dt.datetime(1, 1, 1), x, ) + dt.timedelta(
+    hours=LOCAL_GMT)).time())
 
 newdf = pd.DataFrame(
     columns=["Subject", "Start Date", "Start Time", "End Date", "End Time", "All day event", "Description", "Location",
